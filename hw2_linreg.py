@@ -1,5 +1,8 @@
 import linreg
 import numpy as np
+import hw1_pla
+
+NUM_EXP = 1000
 
 class Line:
     def __init__(self, p1, p2):
@@ -48,11 +51,51 @@ class LRtest:
         self.labels = np.array([self.line.calc(x) for x in self.points])
         self.lr = linreg.LinReg(2)
 
+    def regen_points(self, numpoints):
+        self.n = numpoints
+        self.points = np.random.uniform(-1.0,1.0,(self.n, 2))
+        self.labels = np.array([self.line.calc(x) for x in self.points])
+
+    def train(self):
+        self.lr.train(self.points, self.labels)
+        
     def e_in(self):
-        xw = self.rg(self.points)
+        xw = self.lr.predict(self.points)
         prenorm = np.subtract(xw,self.labels)
         mynorm = np.linalg.norm(prenorm, 2)
         e_in = np.multiply(1.0/float(self.n), mynorm)
         return e_in
         
+def prob567(num_exp):
+    n1 = 100
+    n2 = 1000
+    n_pla = 10
+    ein = []
+    eout = []
+    iters = []
+    for i in range(num_exp):
+        cur_lr = LRtest(n1)
+        cur_lr.train()
+        cur_ein = cur_lr.e_in()
+        ein.append(cur_ein)
+        cur_lr.regen_points(n2)
+        cur_eout = cur_lr.e_in()
+        eout.append(cur_eout)
+        cur_pla = hw1_pla.PLAtest(n_pla)
+        cur_pla.line = cur_lr.line
+        cur_pla.PLA.weights = cur_lr.lr.weights.T
+        cur_iter = cur_pla.test_convergence()
+        iters.append(cur_iter)
+    ein = np.array(ein)
+    eout = np.array(eout)
+    iters = np.array(iters)
+    ein_avg = np.average(ein)
+    eout_avg = np.average(eout)
+    iters_avg = np.average(iters)
+    print("e_in average: %f" % ein_avg)
+    print("e_out average: %f" % eout_avg)
+    print("perceptron convergence average: %f" % iters_avg)
+
+prob567(NUM_EXP)
         
+    

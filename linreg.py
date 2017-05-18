@@ -5,15 +5,19 @@ class LinReg:
         self.dim = max(1, dim)
         self.weights = np.zeros((1+dim,1)) #adding one for offset
 
-    def predict(self,x):
-        real_x = np.append([1], x[:self.dim])
-        cur_h = np.matmul(real_x, self.weights)
+    def X_reshape(self,X):
+        num_examples = X.shape[0]
+        real_X = np.c_[np.ones(num_examples), X]
+        return real_X
+    
+    def predict(self,X):
+        real_X = self.X_reshape(X)
+        cur_h = np.matmul(real_X, self.weights)
         return cur_h
 
     def train(self,X,Y):
         #for the sake of programming ease, let's just assume inputs are numpy ndarrays
         #and are the proper shapes (X = (n, dim), y = (n,1))
-        num_examples = np.shape[0]
-        real_X = np.c_[np.ones(num_examples), X]
+        real_X = self.X_reshape(X)
         pinv_X = np.linalg.pinv(real_X)
         self.weights = np.matmul(pinv_X,Y)
