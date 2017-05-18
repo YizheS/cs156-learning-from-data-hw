@@ -2,8 +2,6 @@ import linreg
 import numpy as np
 import hw1_pla
 
-NUM_EXP = 1000
-
 class Line:
     def __init__(self, p1, p2):
         #input: 2 2-dim numpy arrays
@@ -95,7 +93,3 @@ def prob567(num_exp):
     print("e_in average: %f" % ein_avg)
     print("e_out average: %f" % eout_avg)
     print("perceptron convergence average: %f" % iters_avg)
-
-prob567(NUM_EXP)
-        
-    

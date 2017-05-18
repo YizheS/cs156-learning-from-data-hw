@@ -17,7 +17,7 @@ class CoinFlips:
         self.rand_coin_freq = self.head_freqs[np.random.randint(0, self.num_coins)]
         self.min_coin_freq = self.head_freqs.min()
         
-def hw2_hoeffding(num_exp):
+def prob12(num_exp):
     hw2_hexps = [CoinFlips(1000) for x in range(num_exp)]
     nu_mins = np.array([x.min_coin_freq for x in hw2_hexps])
     nu_firsts = np.array([x.first_coin_freq for x in hw2_hexps])
@@ -30,15 +30,3 @@ def hw2_hoeffding(num_exp):
     print("coin w/ min freq of heads of sims: %f" %  mins_avg)
     print("rand selection of coin of sims: %f" % rand_avg)
     
-
-hw2_hoeffding(10000)
-
-"""
-assignment asks for 10 times the experiments, but it was running a little long so this should be fine
-
-EXAMPLE OUTPUT
-Average number of heads:
-first coins of sims: 0.498810
-coin w/ min freq of heads of sims: 0.038080
-rand selection of coin of sims: 0.501150
-"""
