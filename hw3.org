@@ -1,0 +1,2 @@
+* GENERALIZATION ERROR
+- modified hoeffding: P[|E_{in}(g)-E_{out}(g)| > \varepsilon] \le 2M/e/^{-2\varepsilon^{2}N}
