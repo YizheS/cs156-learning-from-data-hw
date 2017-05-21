@@ -1,2 +1,2 @@
 * GENERALIZATION ERROR
-- modified hoeffding: $$P[|E_{in} (g)-E_{out} (g)| > \epsilon] \le 2Me^{-2\epsilon^2 N}$$
+- modified hoeffding: \begin{P[|E_{in} (g)-E_{out} (g)| > \epsilon] \le 2Me^{-2\epsilon^2 N}\end
