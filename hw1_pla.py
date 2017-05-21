@@ -43,19 +43,19 @@ class PLAtest:
         p = [np.random.uniform(-1.0,1.0,2) for x in range(2)]
         while p[0][0] == p[1][0] and p[0][1] == p[1][1]:
             p = [np.random.uniform(-1.0,1.0,2) for x in range(2)]
-        self.line = Line(p[0],p[1])
+        self.target = Line(p[0],p[1])
         self.PLA = pla.PLA(2)
 
     def test_agreement(self,point):
         cur_p = self.PLA.predict(point)
-        actval = self.line.calc(point)
+        actval = self.target.calc(point)
         return cur_p == actval
 
     def test_convergence(self):
         iters = 0
         testidx = 0
         while True:
-            actval = self.line.calc(self.points[testidx])
+            actval = self.target.calc(self.points[testidx])
             success = self.PLA.train(self.points[testidx],actval)
             if success:
                 allgood = True

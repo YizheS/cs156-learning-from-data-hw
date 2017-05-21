@@ -45,48 +45,47 @@ class LRtest:
         p = [np.random.uniform(-1.0,1.0,2) for x in range(2)]
         while p[0][0] == p[1][0] and p[0][1] == p[1][1]:
             p = [np.random.uniform(-1.0,1.0,2) for x in range(2)]
-        self.line = Line(p[0],p[1])
-        self.labels = np.array([self.line.calc(x) for x in self.points])
+        self.target = Line(p[0],p[1])
+        self.labels = np.array([self.target.calc(x) for x in self.points])
         self.lr = linreg.LinReg(2)
 
     def regen_points(self, numpoints):
         self.n = numpoints
         self.points = np.random.uniform(-1.0,1.0,(self.n, 2))
-        self.labels = np.array([self.line.calc(x) for x in self.points])
+        self.labels = np.array([self.target.calc(x) for x in self.points])
 
     def train(self):
         self.lr.train(self.points, self.labels)
         
     def e_in(self):
         xw = self.lr.predict(self.points)
-        prenorm = np.subtract(xw,self.labels)
-        mynorm = np.linalg.norm(prenorm, 2)
-        e_in = np.multiply(1.0/float(self.n), mynorm)
+        xw = np.sign(xw)
+        mydiff = np.not_equal(xw, self.labels)
+        e_in = np.mean(mydiff)
+        #print(e_in)
+        #e_in = np.multiply(1.0/float(self.n), mydiff)
         return e_in
         
-def prob567(num_exp):
+def prob(num_exp):
     n1 = 100
     n2 = 1000
     n_pla = 10
-    ein = []
-    eout = []
-    iters = []
+    ein = np.array([])
+    eout = np.array([])
+    iters = np.array([])
     for i in range(num_exp):
         cur_lr = LRtest(n1)
         cur_lr.train()
         cur_ein = cur_lr.e_in()
-        ein.append(cur_ein)
+        ein = np.concatenate((ein,[cur_ein]))
         cur_lr.regen_points(n2)
         cur_eout = cur_lr.e_in()
-        eout.append(cur_eout)
+        eout = np.concatenate((eout,[cur_eout]))
         cur_pla = hw1_pla.PLAtest(n_pla)
-        cur_pla.line = cur_lr.line
+        cur_pla.target = cur_lr.target
         cur_pla.PLA.weights = cur_lr.lr.weights.T
         cur_iter = cur_pla.test_convergence()
-        iters.append(cur_iter)
-    ein = np.array(ein)
-    eout = np.array(eout)
-    iters = np.array(iters)
+        iters = np.concatenate((iters,[cur_iter]))
     ein_avg = np.average(ein)
     eout_avg = np.average(eout)
     iters_avg = np.average(iters)

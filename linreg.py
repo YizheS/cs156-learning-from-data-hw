@@ -20,4 +20,4 @@ class LinReg:
         #and are the proper shapes (X = (n, dim), y = (n,1))
         real_X = self.X_reshape(X)
         pinv_X = np.linalg.pinv(real_X)
-        self.weights = np.matmul(pinv_X,Y)
+        self.weights = np.dot(pinv_X,Y)
