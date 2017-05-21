@@ -1,2 +1,11 @@
 * GENERALIZATION ERROR
 - modified hoeffding: P[|E_{in} (g)-E_{out} (g)| > \epsilon] \le 2Me^{-2\epsilon^2 N}
+
+Let \epsilon = 0.05, 2Me^{-2\epsilon ^2 N} \le 0.03
+*Want*:  N
+
+\Rightarrow 0.03 \ge 2Me^{-2\times(0.05)^2 N}
+\Rightarrow 0.03 \ge 2Me^{-0.005N}
+\Rightarrow 
+
+\frac{2}{M}
