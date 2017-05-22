@@ -11,4 +11,4 @@ self-study work for caltech's cs156 machine learning course
   - Linear Regression algo in linreg.py, problem-specific classes/defs in hw2_linreg.py
   - working on nonlinear transformations (hw2_nonlinear.py)
   - actual function calling in hw2.py, call with command-line argument "hoeffding","linreg", or "nlt" (w/o quotes)
-- hw3: generalization error *DONE*, break points, grwoth functions, convex and non-convex sets (hw3.org)
+- hw3: generalization error, break points, grwoth functions, convex and non-convex sets (hw3.org) **DONE**
