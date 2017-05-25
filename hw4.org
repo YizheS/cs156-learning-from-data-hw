@@ -1,3 +1,21 @@
 * GENERALIZATION ERROR
+*Notes :*
+- d_{vc} = VC dimension, highest number of points shatterable by hypothesis set H (m_H (N) = 2^N )
+- \delta = 4 * m_H (2N) e^{(-N/8)*\epsilon^2 }
+\Rightarrow ln(\delta/4) - ln( m_H (2N)) = (-N/8) * \epsilon^2 
+\Rightarrow (8/N ) * (ln (m_H (2N)) - ln(\delta/4)) = \epsilon^2 
+- For N \gt d_{vc} , use simple approximation m_H (N) \approx N^{d_{vc}}
+\Rightarrow (8/N) * (ln ((2N)^{d_{vc}}) - ln(\delta/4)) = \epsilon^2 
+\Rightarrow (8/N) * ((d_vc * ln(2N)) - ln(\delta/4)) = \epsilon^2 
+
+
+Given d_{vc} = 10, \delta = 0.95 (95% confidence). Here are some N and \epsilon:
+- N = 400,000 \rarr \epsilon = 0.05241398
+- N = 420,000 \rarr \epsilon = 0.051241565
+- N = 440,000 \rarr \epsilon = 0.050147846
+- N = 460,000 \rarr \epsilon = 0.04912431
+- N = 480,000 \rarr \epsilon = 0.08163693
+
+So a N = 460,000 yields an \epsilon at most 0.05.
 * BIAS AND VARIANCE
 * VC DIMENSION
