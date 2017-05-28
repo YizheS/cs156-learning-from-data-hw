@@ -12,4 +12,4 @@ self-study work for caltech's cs156 machine learning course
   - working on nonlinear transformations (hw2_nonlinear.py)
   - actual function calling in hw2.py, call with command-line argument "hoeffding","linreg", or "nlt" (w/o quotes)
 - hw3: Generalization Error, Break Points, Growth Functions, Convex and Non-Convex Sets (hw3.org) **DONE**
-- hw4: Generalization Error, Bias and Variance (almost done), VC Dimension (hw4.ipynb) **DONE**
+- hw4: Generalization Error, Bias and Variance, VC Dimension (hw4.ipynb) **DONE**
