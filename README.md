@@ -13,4 +13,4 @@ self-study work for caltech's cs156 machine learning course
   - actual function calling in hw2.py, call with command-line argument "hoeffding","linreg", or "nlt" (w/o quotes)
 - hw3: Generalization Error, Break Points, Growth Functions, Convex and Non-Convex Sets (hw3.org) **DONE**
 - hw4: Generalization Error, Bias and Variance, VC Dimension (hw4.ipynb) **DONE**
-- hw5: Linear Regression Error **DONE**, Nonlinear Transforms **DONE**, Gradient Descent, Logistic Regression, Perceptron Learning Algorithm as Stochastic Gradient Descent (hw5.ipynb)
+- hw5: Linear Regression Error **DONE**, Nonlinear Transforms **DONE**, Gradient Descent **DONE**, Logistic Regression, Perceptron Learning Algorithm as Stochastic Gradient Descent (hw5.ipynb)
