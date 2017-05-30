@@ -9,7 +9,7 @@ class LogReg:
         self.weights = np.zeros(dim+1)
 
     def init_weights(self):
-        self.weights = np.zeros(dim + 1)
+        self.weights = np.zeros(self.dim + 1)
         
     def reshape_X(self, X):
         #number of examples
