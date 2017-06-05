@@ -15,7 +15,7 @@ self-study work for caltech's cs156 machine learning course
 - hw4: Generalization Error, Bias and Variance, VC Dimension (hw4.ipynb) **DONE**
 - hw5 (hw5.ipynb): Linear Regression Error, Nonlinear Transforms, Gradient Descent, Logistic Regression, Perceptron Learning Algorithm as Stochastic Gradient Descent **DONE**
   - logistic regression algo found in logreg.py
-- hw6 (hw6.ipynb): Overfitting and Deterministic Noise **DONE**, Regularization with Weight Decay, Regularization for Polynomials, Neural Networks
+- hw6 (hw6.ipynb): Overfitting and Deterministic Noise **DONE**, Regularization with Weight Decay **DONE**, Regularization for Polynomials, Neural Networks
   - nonlinear regression algorithm found in hw6_nlt.py
   - course-provided data renamed as hw6_train.dta and hw6_test.dta
   - data loading class found in hw6_dataload.py
