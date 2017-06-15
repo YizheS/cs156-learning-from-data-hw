@@ -19,4 +19,7 @@ self-study work for caltech's cs156 machine learning course
   - nonlinear regression algorithm found in hw6_nlt.py
   - course-provided data renamed as hw6_train.dta and hw6_test.dta
   - data loading class found in hw6_dataload.py
-- hw7 (hw7.ipynb): Validation **DONE**, Validation Bias **DONE**, Cross Validation **DONE**, PLA vs SVM
+- hw7 (hw7.ipynb) **DONE**: Validation, Validation Bias, Cross Validation, PLA vs SVM
+  - PLA coded in pla.py
+  - line and line testing algo (with training and testing sets) in line_class.py and line_test.py
+  - SVM coded in svm.py
