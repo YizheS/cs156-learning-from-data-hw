@@ -23,6 +23,10 @@ class SVM:
         #suppress output
         cvo.solvers.options['show_progress'] = False
 
+    def kernel_calc(self, X):
+        #kernel calculation
+        return np.dot(X,X.T)
+
     def X_reshape(self,X):
         num_examples = X.shape[0]
         real_X = np.c_[np.ones(num_examples), X]
@@ -45,7 +49,7 @@ class SVM:
         #note: no reshaping for X
         num_ex, cur_dim = X.shape
         q = cvo.matrix(np.multiply(-1, np.ones(num_ex)))
-        P = cvo.matrix(np.multiply(np.outer(Y, Y), np.dot(X,X.T)))
+        P = cvo.matrix(np.multiply(np.outer(Y, Y), self.kernel_calc(X)))
         A = cvo.matrix(Y.reshape((1, num_ex)))
         b = cvo.matrix(0.0)
         h = cvo.matrix(np.zeros(num_ex))
