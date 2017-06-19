@@ -27,6 +27,14 @@ class SVM:
         #kernel calculation
         return np.dot(X,X.T)
 
+    def get_constraints(self, num_ex):
+        #make constraints matrices G, h being passed number of examples
+        #-alphas <= 0
+        G = cvo.matrix(np.multiply(-1, np.eye(num_ex)))
+        # h = 0
+        h = cvo.matrix(np.zeros(num_ex))
+        return G, h
+
     def X_reshape(self,X):
         num_examples = X.shape[0]
         real_X = np.c_[np.ones(num_examples), X]
@@ -52,8 +60,7 @@ class SVM:
         P = cvo.matrix(np.multiply(np.outer(Y, Y), self.kernel_calc(X)))
         A = cvo.matrix(Y.reshape((1, num_ex)))
         b = cvo.matrix(0.0)
-        h = cvo.matrix(np.zeros(num_ex))
-        G = cvo.matrix(np.multiply(-1, np.eye(num_ex)))
+        G, h = self.get_constraints(num_ex)
         cvo_sol = cvo.solvers.qp(P,q,G,h,A,b)
         alphas = np.ravel(cvo_sol['x'])
         #now to find the weight vector = sum(i=1,N) an*yn*xn
