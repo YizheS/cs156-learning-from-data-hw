@@ -56,9 +56,9 @@ class SVM:
         #expecting X as Nxd matrix and Y as a Nx1 matrix
         #note: no reshaping for X
         num_ex, cur_dim = X.shape
-        q = cvo.matrix(np.multiply(-1, np.ones(num_ex)))
+        q = cvo.matrix(np.multiply(-1, np.ones((num_ex,1))))
         P = cvo.matrix(np.multiply(np.outer(Y, Y), self.kernel_calc(X)))
-        A = cvo.matrix(Y.reshape((1, num_ex)))
+        A = cvo.matrix(Y.reshape(1, num_ex), tc='d')
         b = cvo.matrix(0.0)
         G, h = self.get_constraints(num_ex)
         cvo_sol = cvo.solvers.qp(P,q,G,h,A,b)

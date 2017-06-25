@@ -1,4 +1,5 @@
 import numpy as np
+import cvxopt as cvo
 from svm import SVM
 
 #using cvxopt notation, it takes minimizes x in the following equation:
@@ -18,16 +19,23 @@ from svm import SVM
 
 
 class SVM_Poly(SVM):
-    def __init__(self, exponent upper_limit):
+    def __init__(self, exponent = 1, upper_limit = 0.01):
         self.thresh = 1.0e-5
         self.exponent = exponent
         self.upper_limit = max(0, upper_limit)
         #suppress output
         cvo.solvers.options['show_progress'] = False
 
+    def set_exponent(self, Q):
+        self.exponent = Q
+
+    def set_upper_limit(self, C):
+        self.upper_limit = max(0, C)
+
     def kernel_calc(self, X):
         #polynomial kernel (1+xnT*xm)^Q
-        return np.power(np.add(1, np.dot(X,X.T)), self.exponent) 
+        kernel = np.power(np.add(1, np.dot(X,X.T)), self.exponent)
+        return kernel
 
     def get_constraints(self, num_ex):
         #make constraints matrix G, h being passed number of examples
@@ -35,6 +43,8 @@ class SVM_Poly(SVM):
         G1 = np.multiply(-1, np.eye(num_ex))
         #alphas <= c
         G2 = np.eye(num_ex)
-        G = cvo.matrix(np.vstack((G1, G2)))
-        h = cvo.matrix(np.r_[np.zeros(num_ex), np.full(num_ex, self.upper_limit)])
-        return G, h
+        G = np.vstack((G1, G2))
+        h1 = np.zeros(num_ex)
+        h2 = np.ones(num_ex)*self.upper_limit
+        h = np.hstack((h1, h2))
+        return cvo.matrix(G), cvo.matrix(h)

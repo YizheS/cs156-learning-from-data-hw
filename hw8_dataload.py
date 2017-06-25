@@ -64,7 +64,7 @@ class LFD_Data2:
                 return self.train_Y
             elif self.filt_argc == 1:
                 #one-liner for mapping given param as 1 else -1
-                return self.Y_mapper(self.train_Y, self.self.filt_argv[0])
+                return self.Y_mapper(self.train_Y, self.filt_argv[0])
             elif self.filt_argc == 2:
                 #filtered indices
                 filtered = self.filt_idx(self.train_Y)
@@ -74,7 +74,7 @@ class LFD_Data2:
                 return self.test_Y
             elif self.filt_argc == 1:
                 #one-liner for mapping given param as 1 else -1
-                return self.Y_mapper(self.test_Y, self.self.filt_argv[0])
+                return self.Y_mapper(self.test_Y, self.filt_argv[0])
             elif self.filt_argc == 2:
                 #filtered indices
                 filtered = self.filt_idx(self.test_Y)
