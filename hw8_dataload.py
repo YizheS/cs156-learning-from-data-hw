@@ -50,13 +50,13 @@ class LFD_Data2:
                 #filtered indices
                 filtered = self.filt_idx(self.train_Y)
                 return self.train_X[filtered]
-            else:
-                if self.filt_argc == 0 or self.filt_argc == 1:
-                    return self.test_X
-                elif self.filt_argc == 2:
-                    #filtered indices
-                    filtered = self.filt_idx(self.test_Y)
-                    return self.test_X[filtered]
+        else:
+            if self.filt_argc == 0 or self.filt_argc == 1:
+                return self.test_X
+            elif self.filt_argc == 2:
+                #filtered indices
+                filtered = self.filt_idx(self.test_Y)
+                return self.test_X[filtered]
 
     def get_Y(self, req_set = "train"):
         if req_set.lower() == "train".lower():
