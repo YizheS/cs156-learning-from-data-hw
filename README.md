@@ -23,5 +23,5 @@ self-study work for caltech's cs156 machine learning course
   - PLA coded in pla.py
   - line and line testing algo (with training and testing sets) in line_class.py and line_test.py
   - SVM coded in svm.py
-- hw8 (hw8.ipynb): Primal vs Dual Problem **DONE**, SVM with Soft Margins: Polynomial Kernels **DONE**, Cross Validation, RBF Kernel
+- hw8 (hw8.ipynb): Primal vs Dual Problem **DONE**, SVM with Soft Margins: Polynomial Kernels **DONE**, Cross Validation **DONE**, RBF Kernel
   - data provided for homework from amlbook.com features.train and features.test and renamed here as hw8_train.dta and hw8_test.dta respectively
