@@ -27,3 +27,4 @@ self-study work for caltech's cs156 machine learning course
   - data provided for homework from amlbook.com features.train and features.test and renamed here as hw8_train.dta and hw8_test.dta respectively
   - data loaded and filtered by hw8_dataload.py exporting the LF_Data2 class
   - the SVM class I use comes from scikit-learn
+- final
