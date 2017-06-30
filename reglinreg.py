@@ -2,7 +2,7 @@ import numpy as np
 
 #want: X = x1, x2
 class RegLinReg:
-    def __init__(self, l_reg, nlt):
+    def __init__(self, l_reg, nlt=False):
         self.l_reg = l_reg #lambda regularization term
         self.nlt = nlt == True #to use a nonlinear transform or not (for now, order 2)
 
