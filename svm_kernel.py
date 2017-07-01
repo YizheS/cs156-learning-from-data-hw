@@ -19,10 +19,10 @@ from svm import SVM
 
 
 class SVM_Poly(SVM):
-    def __init__(self, exponent = 1, upper_limit = 0.01):
+    def __init__(self, exponent = 1, upper_limit = 0):
         self.thresh = 1.0e-5
         self.exponent = exponent
-        self.upper_limit = max(0, upper_limit)
+        self.upper_limit = upper_limit
         #suppress output
         cvo.solvers.options['show_progress'] = False
 
@@ -38,13 +38,23 @@ class SVM_Poly(SVM):
         return kernel
 
     def get_constraints(self, num_ex):
-        #make constraints matrix G, h being passed number of examples
-        #-alphas <= 0
-        G1 = np.multiply(-1, np.eye(num_ex))
-        #alphas <= c
-        G2 = np.eye(num_ex)
-        G = np.vstack((G1, G2))
-        h1 = np.zeros(num_ex)
-        h2 = np.ones(num_ex)*self.upper_limit
-        h = np.hstack((h1, h2))
-        return cvo.matrix(G), cvo.matrix(h)
+        #soft margin
+        if self.upper_limit > 0:
+            #make constraints matrix G, h being passed number of examples
+            #-alphas <= 0
+            G1 = np.multiply(-1, np.eye(num_ex))
+            #alphas <= c
+            G2 = np.eye(num_ex)
+            G = np.vstack((G1, G2))
+            h1 = np.zeros(num_ex)
+            h2 = np.ones(num_ex)*self.upper_limit
+            h = np.hstack((h1, h2))
+            return cvo.matrix(G), cvo.matrix(h)
+        else:
+            #hard margin
+            G = cvo.matrix(np.multiply(-1, np.eye(num_ex)))
+            # h = 0
+            h = cvo.matrix(np.zeros(num_ex))
+            return G, h
+
+

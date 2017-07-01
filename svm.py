@@ -55,6 +55,8 @@ class SVM:
     def train(self,X,Y):
         #expecting X as Nxd matrix and Y as a Nx1 matrix
         #note: no reshaping for X
+        X = X.astype(float)
+        Y = Y.astype(float)
         num_ex, cur_dim = X.shape
         q = cvo.matrix(np.multiply(-1, np.ones((num_ex,1))))
         P = cvo.matrix(np.multiply(np.outer(Y, Y), self.kernel_calc(X)))
