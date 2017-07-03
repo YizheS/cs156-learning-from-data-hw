@@ -1,6 +1,5 @@
 import numpy as np
 import cvxopt as cvo
-from svm import SVM
 
 #using cvxopt notation, it takes minimizes x in the following equation:
 # 0.5 * xT * P * x + qT * x with constrants G*x <= h, Ax = b
@@ -18,7 +17,7 @@ from svm import SVM
 # G = -1 * NxN identity times alpha where alpha should be a 1XN matrix
 
 
-class SVM_Poly(SVM):
+class SVM_Poly():
     def __init__(self, exponent = 1, upper_limit = 0):
         self.thresh = 1.0e-5
         self.exponent = exponent
@@ -32,9 +31,10 @@ class SVM_Poly(SVM):
     def set_upper_limit(self, C):
         self.upper_limit = max(0, C)
 
-    def kernel_calc(self, X):
+    def kernel_calc(self, X2):
+        #X2 = inputs
         #polynomial kernel (1+xnT*xm)^Q
-        kernel = np.power(np.add(1, np.dot(X,X.T)), self.exponent)
+        kernel = np.power(np.add(1, np.dot(self.X,X2.T)), self.exponent)
         return kernel
 
     def get_constraints(self, num_ex):
@@ -56,5 +56,71 @@ class SVM_Poly(SVM):
             # h = 0
             h = cvo.matrix(np.zeros(num_ex))
             return G, h
+    def ayK(self, Xin):
+        #get the value of sum(alpha_n > 0) {alpha_n * y_n * K(x_n, input)}
+        k_calc = self.kernel_calc(Xin)
+        pre_sum = np.multiply(self.alphas, np.multiply(self.Y, k_calc))
+        post_sum = np.sum(pre_sum, axis=0)
+        return post_sum
+        
+        
+    def predict(self,Xin):
+        post_sum = np.add(self.ayK(Xin), self.bias)
+        return post_sum
+
+    
+    def calc_error(self, Xin,Yin):
+        num_ex = Xin.shape[0]
+        predicted = np.sign(self.predict(Xin))
+        num_incorrect = np.sum(np.not_equal(predicted, np.sign(Yin)))
+        prop_incorrect = float(num_incorrect)/float(num_ex)
+        return prop_incorrect
 
 
+    def train(self,X,Y):
+        #expecting X as Nxd matrix and Y as a Nx1 matrix
+        #note: no reshaping for X
+        X = X.astype(float)
+        Y = Y.astype(float)
+        self.X = X
+        num_ex, cur_dim = X.shape
+        self.Y = Y.reshape((num_ex, 1))
+        k_calc = self.kernel_calc(X)
+        q = cvo.matrix(np.multiply(-1, np.ones((num_ex,1))))
+        P = cvo.matrix(np.multiply(np.outer(Y, Y), k_calc))
+        A = cvo.matrix(Y.reshape(1, num_ex), tc='d')
+        b = cvo.matrix(0.0)
+        G, h = self.get_constraints(num_ex)
+        cvo_sol = cvo.solvers.qp(P,q,G,h,A,b)
+        alphas = np.ravel(cvo_sol['x'])
+        alphas_thresh = np.greater_equal(alphas,self.thresh)
+        sv_idx = np.argmax(alphas_thresh)
+        self.alphas = alphas.reshape((num_ex, 1))
+        self.num_alphas = np.sum(alphas_thresh)
+        self.bias = Y[sv_idx] - self.ayK(self.kernel_calc(X[sv_idx]))
+        
+
+
+class SVM_RBF(SVM_Poly):
+    def __init__(self, gamma = 1, upper_limit = 0):
+        self.thresh = 1.0e-5
+        self.gamma = gamma
+        self.upper_limit = upper_limit
+        #suppress output
+        cvo.solvers.options['show_progress'] = False
+
+
+    def kernel_calc(self, Xin):
+        if len(Xin.shape) == 1:
+            Xin = Xin.reshape((1, Xin.shape[0]))
+        cur_m = self.X.shape[0]
+        cur_n = Xin.shape[0]
+        ret = np.ndarray((cur_m, cur_n))
+        if self.X.shape[1] == Xin.shape[1]:
+            for i in range(cur_m):
+                for j in range(cur_n):
+                    ret[i][j] = np.exp(-1 * self.gamma * np.linalg.norm(self.X[i] - Xin[j]))
+        if ret.shape[0] == 1 and ret.shape[1] == 1:
+            return ret[0][0]
+        else:
+            return ret
