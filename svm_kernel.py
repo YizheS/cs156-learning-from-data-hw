@@ -97,7 +97,7 @@ class SVM_Poly():
         sv_idx = np.argmax(alphas_thresh)
         self.alphas = alphas.reshape((num_ex, 1))
         self.num_alphas = np.sum(alphas_thresh)
-        self.bias = Y[sv_idx] - self.ayK(self.kernel_calc(X[sv_idx]))
+        self.bias = Y[sv_idx] - self.ayK(X[sv_idx])
         
 
 
