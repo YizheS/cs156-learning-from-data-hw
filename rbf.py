@@ -33,7 +33,7 @@ class Lloyd:
             dest_cluster = cur_cluster #cluster that current xn ends up in
             shortest_dist = np.linalg.norm(self.cluster_centers[cur_cluster]-xn) #dist of xn from current cluster
             #iterate over clusters
-            for l, cluster in enumerate(self.cluster_center):
+            for l, cluster in enumerate(self.cluster_centers):
                 cur_dist = np.linalg.norm(cluster - xn) #dist of xn from iterated cluster
                 if cur_dist < shortest_dist:
                     dest_cluster = l
@@ -78,7 +78,7 @@ class Lloyd:
         if k != self.k:
             self.k = max(1, int(k))
             self.init_clusters()
-xb
+
     def run(self):
         runs = 1 #number of runs executed
         while True:
@@ -105,6 +105,14 @@ class RBF:
 
     def set_Y(self, Y):
         self.Y = Y
+
+    def set_k(self, k):
+        self.k = k
+        self.lloyd.set_k(k)
+        self.lloyd.run()
+
+    def set_gamma(self, g):
+        self.gamma = g
  
     def kernel_calc(self, Xin):
         #calculates exp( - gamma * ||Xin - mu||^2)
